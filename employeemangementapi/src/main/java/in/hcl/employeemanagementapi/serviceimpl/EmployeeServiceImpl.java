@@ -1,47 +1,63 @@
 package in.hcl.employeemanagementapi.serviceimpl;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import in.hcl.employeemanagementapi.domain.Employee;
 import in.hcl.employeemanagementapi.repository.EmployeeRepository;
 import in.hcl.employeemanagementapi.service.EmployeeService;
 
-public class EmployeeServiceImpl implements EmployeeService{
-
+@Service
+public class EmployeeServiceImpl implements EmployeeService {
 	@Autowired
-	private EmployeeRepository employeeRepository;
-	
-	@Override
-	public List<Employee> getAllemployees() {
-		return employeeRepository.findAll();
+	private EmployeeRepository employeeRespository;
+
+	public Employee addEmployee(Employee employee) {
+		return employeeRespository.save(employee);
 	}
 
-	@Override
-	public void saveEmployee(Employee employee) {
-		this.employeeRepository.save(employee);
-		
+	public List<Employee> addAllEmployees(List<Employee> employees) {
+		return employeeRespository.saveAll(employees);
 	}
 
-	@Override
-	public Employee getEmployeeById(long id) {
-		Optional<Employee> optional = employeeRepository.findById(id);
-		Employee employee = null;
-		if (optional.isPresent()) {
-			employee = optional.get();
-					}else {
-						throw new RuntimeException(" Employee not found for id ::" + id);
-					}
-		return employee;
-						
+	public Employee getEmployeeById(Long id) {
+		return employeeRespository.findById(id).orElse(null);
 	}
 
-	@Override
-	public void deleteEmployeeById(long id) {
-		this.employeeRepository.deleteById(id);
-		
+	public Employee updateEmployee(Employee employee, Long id) {
+		Employee employee_entity = getEmployeeById(id);
+		if (employee != null) {
+			if (employee.getName() != null)
+				employee_entity.setName(employee.getName());
+			if (employee.getEmail() != null)
+				employee_entity.setEmail(employee.getEmail());
+			if (employee.getSalary() != null)
+				employee_entity.setSalary(employee.getSalary());
+			if (employee.getAddress() != null)
+				employee_entity.setAddress(employee.getAddress());
+			if (employee.getContact() != null)
+				employee_entity.setContact(employee.getContact());
+			if (employee.getDesignation() != null)
+				employee_entity.setDesignation(employee.getDesignation());
+			if (employee.getDepartment() != null)
+				employee_entity.setDepartment(employee.getDepartment());
+		}
+		return employeeRespository.save(employee_entity);
+	}
+
+	public boolean deleteEmployeeById(Long id) {
+		Employee employee = getEmployeeById(id);
+		if (employee != null) {
+			employeeRespository.delete(employee);
+			return true;
+		}
+		return false;
+	}
+
+	public List<Employee> getEmployeeByName(String name) {
+		return employeeRespository.findByName(name);
 	}
 
 }
