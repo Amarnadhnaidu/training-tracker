@@ -16,33 +16,26 @@ public class Schedule {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private long employeeId;
+	private long scheduleId;
 	private String employeeName;
 	private String programName;
 	@JsonFormat(pattern="yyyy-mm-dd")
 	private Date startDate;
 	@JsonFormat(pattern="yyyy-mm-dd")
 	private Date endDate;
-	@JsonFormat(pattern="yyyy-mm-dd")
-	private Date createdAt;
-	@JsonFormat(pattern="yyyy-mm-dd")
-	private Date updatedAt;
-	public Schedule(long employeeId, String employeeName, String programName, Date startDate, Date endDate,
-			Date createdAt, Date updatedAt) {
+	public Schedule(long scheduleId, String employeeName, String programName, Date startDate, Date endDate) {
 		super();
-		this.employeeId = employeeId;
+		this.scheduleId = scheduleId;
 		this.employeeName = employeeName;
 		this.programName = programName;
 		this.startDate = startDate;
 		this.endDate = endDate;
-		this.createdAt = createdAt;
-		this.updatedAt = updatedAt;
 	}
-	public long getEmployeeId() {
-		return employeeId;
+	public long getScheduleId() {
+		return scheduleId;
 	}
-	public void setEmployeeId(long employeeId) {
-		this.employeeId = employeeId;
+	public void setScheduleId(long scheduleId) {
+		this.scheduleId = scheduleId;
 	}
 	public String getEmployeeName() {
 		return employeeName;
@@ -68,27 +61,5 @@ public class Schedule {
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
-	public Date getCreatedAt() {
-		return createdAt;
-	}
-	public void setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
-	}
-	public Date getUpdatedAt() {
-		return updatedAt;
-	}
-	public void setUpdatedAt(Date updatedAt) {
-		this.updatedAt = updatedAt;
-	}
 	
-	@PrePersist
-	public void onCreate() {
-		this.createdAt = new Date();
-	}
-	
-	@PreUpdate
-	public void onUdate() {
-		this.updatedAt = new Date();
-	}
-
 }

@@ -22,7 +22,7 @@ import in.hcl.schedule_management.service.ScheduleService;
 
 
 @RestController
-@RequestMapping("/employees")
+@RequestMapping("schedule")
 public class Schedulecontroller {
 	
 	@Autowired
@@ -40,9 +40,9 @@ public class Schedulecontroller {
 	return new ResponseEntity<Schedule>(schel, HttpStatus.CREATED);
 	}
 
-	@GetMapping("/{employeeId}")
-	public Schedule getCalendarById(@PathVariable("employeeId") Long employeeId) {
-	return scheduleService.getScheduleById(employeeId);
+	@GetMapping("/{scheduleId}")
+	public Schedule getCalendarById(@PathVariable("scheduleId") Long scheduleId) {
+	return scheduleService.getScheduleById(scheduleId);
 	}
 	
 	@PutMapping("/updateSchedule")
@@ -55,9 +55,9 @@ public class Schedulecontroller {
 	return scheduleService.getAllSchedule();
 	}
 
-	@DeleteMapping("{calendarId}")
-	public void deleteCalendarById(Long calendarId) {
-	scheduleService.deleteScheduleById(calendarId);
+	@DeleteMapping("{scheduleId}")
+	public void deleteCalendarById(@PathVariable("scheduleId") Long scheduleId) {
+	scheduleService.deleteScheduleById(scheduleId);
 	}
 
 
